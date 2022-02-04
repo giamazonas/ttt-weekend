@@ -1,56 +1,49 @@
 /*-------------------------------- Constants --------------------------------*/
 
-//** 4 define requierd constants
-// let playerX = 1
-// let playerO = -1
-// in render function this provides logic for what need to display
-const players = {
-  '1': {
-    name: 'playerX',
-    score: 0,
-  },
-  '-1': {
-    name: 'playerO',
-    score: 0,
-  }
-}
+//** 4 define required constants
 
-const winningCombos = [
-  combo1 = [sq0, sq1, sq2],
-  combo2 = [sq3, sq4, sq5],
-  combo3 = [sq6, sq7, sq8],
-  combo4 = [sq0, sq3, sq6],
-  combo5 = [sq1, sq4, sq7],
-  combo6 = [sq2, sq5, sq8],
-  combo7 = [sq0, sq4, sq8],
-  combo8 = [sq6, sq4, sq2],
+const playerX = 1
+const playerO = -1
+let turn 
+// in render function this provides logic for what need to display
+
+
+const winCombo = [
+  combo1 = [0, 1, 2],
+  combo2 = [3, 4, 5],
+  combo3 = [6, 7, 8],
+  combo4 = [0, 3, 6],
+  combo5 = [1, 4, 7],
+  combo6 = [2, 5, 8],
+  combo7 = [0, 4, 8],
+  combo8 = [6, 4, 2],
 ]
 
+
+
+
 /*---------------------------- Variables (state) ----------------------------*/   //**  1   */ 
-let allSquares
+
 //1.1
-let winner
+let winner = null
 // 1.3 
-let turn
+// let turn 
 //1.2
 //define variables needed to track state of the game
-
+let tie 
 
 
 /*------------------------ Cached Element References ------------------------*/  //** 2 */
 const sq = document.querySelectorAll('.square')
 const message = document.querySelector('#message')
+const gameBoard = document.querySelector('.board')
+
 //   return `Click your square of choice, to start the game.`
 // }
-allSquares = [sq0 = null, sq1 = null, sq2 = null, sq3 = null, sq4 = null, sq5 = null, sq6 = null, sq7 = null, sq8 = null]
-console.log(allSquares)
+// allSquares = [sq0 = null, sq1 = null, sq2 = null, sq3 = null, sq4 = null, sq5 = null, sq6 = null, sq7 = null, sq8 = null]
+// console.log(allSquares)
 
 
-// let allSquares = squareArr.map(function(a){
-
-// }
-// )
-//use a for loop to map each null to eac indv square using index (0= top left and so on)
 
 //
 
@@ -63,32 +56,70 @@ sq.forEach(square => square.addEventListener('click', handleClick))
 /*-------------------------------- Functions --------------------------------*/
 // init   --  to initialize stated variablees  //** 3.1 */
 function init(){
-
-  
+  sq = [null, null, null, null, null, null, null, null, null]
+  turn = 1 // 3.2.2 
+  winner = null // 3.2.3  
+  message.textContent = `Let's play! Choose your first square.`
+  render()     //3.2.4 
+  sq.innerHTML = ""
 }
+//___________________________________________
 
 //render  -- render these values to the page   //** 3.2 */
-function render() {
-  gameBoard.forEach(allSquares => {
-    if (allSquares === 1){
-      allSquare.innerHTML = 'X'}
-      else if (allSquares === -1) {
-        allSquares.innerHTML = 'O'
-      }else {
-        allSquares = null
-      }
-    }) 
-    console.log(allSquares)
-
+function renderGame() {
+  gameBoard.forEach((sq, idx) => {
+    if (sq === 1){
+      sq[idx].innerHTML = 'X'
+      sq[idx].style.backgroundColor = 'red';
+      message.textContent = `It's O's turn...`
+    }
+      else if (sq === -1) {
+        sq[idx].innerHTML = 'O'
+        sq[idx].style.backgrounColor = 'blue';
+        message.textContent = `It's X's turn...`
+      // }else (sq === null){
+      //   sq[idx].innerHTML = ''
+        }
+    }
+  ) 
 }
+
+    // i (!isWinner) {
+    //   //indicate whose turn it is
+    // } else if (winner ==='T') {
+    //   //indicate a tie game
+    // }else {
+    //   //congrats to the winner!
+    //   gameMessage.textContent = 'congrats'
+    // }
+
+
 
 function handleClick (event) {
   console.log(event.target.id)
 }
 
 //play  -  wait for user to click square   //** 3.3 */
+
+
+
+  
+function renderWinner(){
+  let isWinner = winCombo.forEach()
+  for(let c = 0; c < winCombo.length; c++){
+    if (playerX = isWinner) {
+      return `X is the winner!`
+      console.log(isWinner)
+    // }else if (playerO = isWinner){
+      return `O is the winner!`
+    }else (tie)=> `Tie Game. Play again!`
+    }
+  }
+
+
+
     //  handle when use clicks square   //** 5 */
-    //  handle player clicking replay button  ?//**6 */
+    //  handle player clicking replay button  //**6 */
 
 // reset game option/button??
 
@@ -102,5 +133,3 @@ function handleClick (event) {
 // I should be made to feel like a winner (confetti)
 // should be told game ends in tie if tie
 // reset button at end regardless, given chance to play again
-
-
