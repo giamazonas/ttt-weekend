@@ -28,6 +28,7 @@ const message = document.querySelector('#message')
 
 const gameBoard = document.querySelector('.board')
 
+const resetBtn = document.querySelector('#reset-button')
 
 //// allSquares = [sq0 = null, sq1 = null, sq2 = null, sq3 = null, sq4 = null, sq5 = null, sq6 = null, sq7 = null, sq8 = null]
 
@@ -54,14 +55,27 @@ const winCombo = [
 sq.forEach(square => square.addEventListener('click', handleClick))
 
 
+function handleClick(event) {
+
+  if (winner !== null) {
+    return winner.push()
+  } else {
+  return (turn * -1)
+  //obtain index of sq clicked on
+  // extract index from id asigned to element
+  // filter click to an array 
+  }
+}
+
 /*-------------------------------- Functions --------------------------------*/
 // init   --  to initialize stated variablees  //** 3.1 */
 function init(){
   sq = [null, null, null, null, null, null, null, null, null]
   turn = 1   // 1/-1 ? // 3.2.2 
   winner = null // 3.2.3  
-  message.textContent = `Let's play! Choose your first square.`
+  message.textContent = `Let's play! Choose your first square.`  
   sq.innerHTML = ""
+  resetBtn.setAttribute("hidden", true)
   render()     //3.2.4 
 }
 
@@ -93,25 +107,18 @@ function getWinner(){
   for(let c = 0; c < winCombo.length; c++){
     if (playerX = winner()) {
       return `X is the winner!`
-      console.log(winner())
-    // }else if (playerO = isWinner){
+      confetti.start(2000)
+      resetBtn.removeAttribute("hidden")
+      // console.log(winner())
+    }else if (playerO = winner()){
       return `O is the winner!`
+      confetti.start(2000)
+      resetBtn.removeAttribute("hidden")
     }else (tie)=> `Tie Game. Play again!`
     }
   }
-  // (winner() = winCombo.some(arr)
 
-  function handleClick(e, idx) {
-    return sq[idx]
-    if (winner !== null) {
-      return gameOver
-  } else return winner.push()
-    return (turn * -1)
-    //obtain index of sq clicked on
-    // extract index from id asigned to element
-    // filter click to an array 
-    // console.log(event.target.id)
-  }
+
   
   //play  -  wait for user to click square   //** 3.3 */
 
