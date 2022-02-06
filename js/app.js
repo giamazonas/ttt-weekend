@@ -13,7 +13,7 @@ let turn
 
 //1.1
 let winner = null
-let gameOver, sq, turnCount
+let gameOver, sq, turnCount, tie, square
 // 1.3 
 // let turn 
 //1.2
@@ -29,7 +29,7 @@ const gameStatus = document.querySelector('#message')
 const gameBoard = document.querySelectorAll('.board div')
 
 const resetBtn = document.querySelector('#reset-button')
-
+const board = document.querySelector('.board')
 //// allSquares = [sq0 = null, sq1 = null, sq2 = null, sq3 = null, sq4 = null, sq5 = null, sq6 = null, sq7 = null, sq8 = null]
 
 
@@ -53,9 +53,10 @@ const winCombo = [
 /*----------------------------- Event Listeners -----------------------------*/
 //use single listener with event bubbling 
 
-gameBoard.forEach(el => el.addEventListener('click', handleClick))
-gameStatus.textContent = message
 
+// gameBoard.forEach(el => el.addEventListener('click', handleClick))
+gameStatus.textContent = message
+resetBtn.addEventListener('click', init)
 
 /*-------------------------------- Functions --------------------------------*/
 // init   --  to initialize stated variablees  //** 3.1 */
@@ -70,58 +71,93 @@ function init(){
   turn = 1  // 1/-1 ? // 3.2.2 
   winner = null // 3.2.3  
   message.textContent = `Let's play! Choose your first square.`  
-
+  // T = null
+  gameBoard.forEach(sq => sq.innerText ='')
   resetBtn.setAttribute("hidden", true)
+  handleClick(sq)
+  getWinner()
   // render()     //3.2.4 
 }
 
 
+function handleClick(sq){
+  board.addEventListener('click', function(event){
+    console.log(event.target.id.replace('sq', ''))
+      const idx = event.target.id.replace('sq', '')
+      if (winner !== null){
+        return
+      }
+      if (sq[idx] !== null){
+        return 
+      }
+      sq[idx]= turn
+      turn *= -1
+      turnCount += 1
+
+    resetBtn.setAttribute('click', init)
+    render(sq, idx)
+  })
+}
 //update array of null values:
-function handleClick(event) {
-  console.log(event.target.id.replace('sq', ''))
-  const idx = event.target.id.replace('sq', '')
-  if (sq[idx] !== null){
-    return 
-  }
-  sq[idx]= turn
-  turn *= -1
+// function handleClick(event) {
+//   console.log(event.target.id.replace('sq', ''))
+//   const idx = event.target.id.replace('sq', '')
+//   if (sq[idx] !== null){
+//     return 
+//   }
+//   sq[idx]= turn
+//   turn *= -1
+// console.log(sq, idx)
 
-  turnCount += 1
-render()
+//   // turnCount += 1
 
-  //obtain index of sq clicked on
-  // extract index from id asigned to element
-  // filter click to an array 
-  }
+//   resetBtn.setAttribute('click', init)
+// render(sq, idx)
+
+//   //obtain index of sq clicked on
+//   // extract index from id asigned to element
+//   // filter click to an array 
+//   }
 // }
 //___________________________________________
 
 //render  -- render these values to the page   //** 3.2 */
 
-function render() {
-  // console.log(gameBoard.children)
-  sq.forEach((el, idx) => {
-    if (el === 1){
-      gameBoard[idx].textContent = 'X'
-      // gameBoard[idx].style.backgroundColor = 'red';
-      message.textContent = `It's O's turn...`
-        // resetBtn.removeAttribute("hidden")
-    }
-    else if (el === -1) {
-      gameBoard[idx].textContent = 'O'
-      // gameBoard[idx].style.backgrounColor = 'blue';
-      message.textContent = `It's X's turn...`
-        // resetBtn.removeAttribute("hidden")
-    }
-    // else if (el === null){
+function render(sq, idx) {
+    // console.log()
+  if (turn === 1) {
+    // console.log('CHECK')
+    gameBoard[idx].innerText = 'X' 
+    console.log(gameBoard[idx])
+    message.textContent = `It's O's turn...`
+  }else if(turn === -1){
+    gameBoard[idx].textContent = 'O'
+    message.textContent = `It's X's turn...`
+  }
+  // else if (el === null){
+  //   gameBoard[sq].innerHTML = ''
+  // }
+  // sq.forEach((el, idx) => {
+  //   if (el === 1){
+  //     gameBoard[idx].textContent = 'X'
+  //     // gameBoard[idx].style.backgroundColor = 'red';
+  //     message.textContent = `It's O's turn...`
+  //       // resetBtn.removeAttribute("hidden")
+  //   }
+  //   else if (el === -1) {
+  //     gameBoard[idx].textContent = 'O'
+  //     // gameBoard[idx].style.backgrounColor = 'blue';
+  //     message.textContent = `It's X's turn...`
+  //       // resetBtn.removeAttribute("hidden")
+  //   }
+  //   // else if (el === null){
     //   // gameBoard[idx].innerHTML = ''
-    
+    getWinner()
     // } 
-  }) 
+  }
+  // ) 
 
-getWinner()
-  
-}
+// }
 
 
 function getWinner(){
@@ -129,19 +165,27 @@ function getWinner(){
   winCombo.forEach((combo)=>{
     if (sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === 3) {
         console.log(`X wins!`)
-        message.textContent = `X is the winner!`
+        message.textContent = `O is the winner!`
         confetti.start(2000)
         resetBtn.removeAttribute("hidden")
     }else if(sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === -3){
         console.log(`O wins!`)
-        message.textContent = `O is the winner!`
+        message.textContent = `X is the winner!`
       confetti.start(2000)
       resetBtn.removeAttribute("hidden")
-    }else if (sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === null){ 
-      console.log('check tie')
-      message.textContent = `Tie Game. Play again!`
-    resetBtn.removeAttribute("hidden")
-    }
+    } 
+    // else if (sq.every()) !== null){
+    //   console.log(tie)
+    // }
+    // else if (sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === null &&
+    //     sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === 3 ||
+    //     sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === -3) { 
+    //   console.log('check tie')
+    //   message.textContent = `Tie Game. Play again!`
+    // resetBtn.removeAttribute("hidden")
+    // }
+
+    
     // console.log(combo[0]) // this value is an index that can be 
     // //passed into sq 
     // console.log(combo[1])
