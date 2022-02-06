@@ -13,7 +13,7 @@ let turn
 
 //1.1
 let winner = null
-let gameOver, sq 
+let gameOver, sq, turnCount
 // 1.3 
 // let turn 
 //1.2
@@ -24,8 +24,8 @@ let gameOver, sq
 
 /*------------------------ Cached Element References ------------------------*/  //** 2 */
 // const sq = document.querySelectorAll('.square')
-const message = document.querySelector('#message')
 
+const gameStatus = document.querySelector('#message')
 const gameBoard = document.querySelectorAll('.board div')
 
 const resetBtn = document.querySelector('#reset-button')
@@ -46,6 +46,7 @@ const winCombo = [
 ]
 
 
+
 // **  element to display game status??
 //
 
@@ -53,7 +54,7 @@ const winCombo = [
 //use single listener with event bubbling 
 
 gameBoard.forEach(el => el.addEventListener('click', handleClick))
-
+gameStatus.textContent = message
 
 
 /*-------------------------------- Functions --------------------------------*/
@@ -79,12 +80,13 @@ function init(){
 function handleClick(event) {
   console.log(event.target.id.replace('sq', ''))
   const idx = event.target.id.replace('sq', '')
-  sq[idx] = 1
-  // if (sq[idx] !== null){
-  //   return
-  // }
-  // sq[idx]= turn
-  // turn *= -1
+  if (sq[idx] !== null){
+    return 
+  }
+  sq[idx]= turn
+  turn *= -1
+
+  turnCount += 1
 render()
 
   //obtain index of sq clicked on
@@ -103,41 +105,69 @@ function render() {
       gameBoard[idx].textContent = 'X'
       // gameBoard[idx].style.backgroundColor = 'red';
       message.textContent = `It's O's turn...`
+        // resetBtn.removeAttribute("hidden")
     }
     else if (el === -1) {
       gameBoard[idx].textContent = 'O'
       // gameBoard[idx].style.backgrounColor = 'blue';
       message.textContent = `It's X's turn...`
+        // resetBtn.removeAttribute("hidden")
     }
-    else if (el === null){
-      // gameBoard[idx].innerHTML = ''
-    }
-  })
+    // else if (el === null){
+    //   // gameBoard[idx].innerHTML = ''
+    
+    // } 
+  }) 
 
-render()
-
+getWinner()
   
 }
 
 
-
 function getWinner(){
-  let winner = winCombo.forEach()
-  for(let c = 0; c < winCombo.length; c++){
-    if (playerX = winner()) {
-      return `X is the winner!`
+
+  winCombo.forEach((combo)=>{
+    if (sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === 3) {
+        console.log(`X wins!`)
+        message.textContent = `X is the winner!`
+        confetti.start(2000)
+        resetBtn.removeAttribute("hidden")
+    }else if(sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === -3){
+        console.log(`O wins!`)
+        message.textContent = `O is the winner!`
       confetti.start(2000)
       resetBtn.removeAttribute("hidden")
-      // console.log(winner())
-    }else if (playerO = winner()){
-      return `O is the winner!`
-      confetti.start(2000)
-      resetBtn.removeAttribute("hidden")
-    }else (tie)=> `Tie Game. Play again!`
+    }else if (sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === null){ 
+      console.log('check tie')
+      message.textContent = `Tie Game. Play again!`
+    resetBtn.removeAttribute("hidden")
     }
-  }
+    // console.log(combo[0]) // this value is an index that can be 
+    // //passed into sq 
+    // console.log(combo[1])
+    // console.log(combo[2])
+    console.log('CHECK', sq[combo[0]]+sq[combo[1]]+sq[combo[2]])
 
-
+    ///** */   possible tie equals turnCount === 9
+    // console.log('SQ', sq)
+})}
+  // gameBoard.reduce()
+  //** */ let winner = (3 || -3)
+  // for(let c = 0; c < gameBoard(); c++){
+  //   if (playerX = winner()) {
+  //     return `X is the winner!`
+  //     confetti.start(2000)
+  //     resetBtn.removeAttribute("hidden")
+  //     // console.log(winner())
+  //   }else if (playerO = winner()){
+  //     return `O is the winner!`
+  //     confetti.start(2000)
+  //     resetBtn.removeAttribute("hidden")
+  //   }else if (tie !== winner){ 
+  //   return `Tie Game. Play again!`
+  //   resetBtn.removeAttribute("hidden")
+  //   }
+    
 
   
   //play  -  wait for user to click square   //** 3.3 */
