@@ -13,20 +13,20 @@ let turn
 
 //1.1
 let winner = null
-let gameOver 
+let gameOver, sq 
 // 1.3 
 // let turn 
 //1.2
 ////define variables needed to track state of the game
-let tie 
+// let tie 
 //// let initMessage = `Click your square of choice, to start the game.`
 
 
 /*------------------------ Cached Element References ------------------------*/  //** 2 */
-const sq = document.querySelectorAll('.square')
+// const sq = document.querySelectorAll('.square')
 const message = document.querySelector('#message')
 
-const gameBoard = document.querySelector('.board')
+const gameBoard = document.querySelectorAll('.board div')
 
 const resetBtn = document.querySelector('#reset-button')
 
@@ -52,54 +52,73 @@ const winCombo = [
 /*----------------------------- Event Listeners -----------------------------*/
 //use single listener with event bubbling 
 
-sq.forEach(square => square.addEventListener('click', handleClick))
+gameBoard.forEach(el => el.addEventListener('click', handleClick))
 
 
+
+/*-------------------------------- Functions --------------------------------*/
+// init   --  to initialize stated variablees  //** 3.1 */
+
+init()
+function init(){
+  sq = [
+    null, null, null, 
+    null, null, null, 
+    null, null, null]
+  console.log(sq)
+  turn = 1  // 1/-1 ? // 3.2.2 
+  winner = null // 3.2.3  
+  message.textContent = `Let's play! Choose your first square.`  
+
+  resetBtn.setAttribute("hidden", true)
+  // render()     //3.2.4 
+}
+
+
+//update array of null values:
 function handleClick(event) {
+  console.log(event.target.id.replace('sq', ''))
+  const idx = event.target.id.replace('sq', '')
+  sq[idx] = 1
+  // if (sq[idx] !== null){
+  //   return
+  // }
+  // sq[idx]= turn
+  // turn *= -1
+render()
 
-  if (winner !== null) {
-    return winner.push()
-  } else {
-  return (turn * -1)
   //obtain index of sq clicked on
   // extract index from id asigned to element
   // filter click to an array 
   }
-}
-
-/*-------------------------------- Functions --------------------------------*/
-// init   --  to initialize stated variablees  //** 3.1 */
-function init(){
-  sq = [null, null, null, null, null, null, null, null, null]
-  turn = 1   // 1/-1 ? // 3.2.2 
-  winner = null // 3.2.3  
-  message.textContent = `Let's play! Choose your first square.`  
-  sq.innerHTML = ""
-  resetBtn.setAttribute("hidden", true)
-  render()     //3.2.4 
-}
-
+// }
 //___________________________________________
 
 //render  -- render these values to the page   //** 3.2 */
 
 function render() {
-  gameBoard.forEach((sq, idx) => {
-    if (sq === 1){
-      sq[idx].innerHTML = 'X'
-      sq[idx].style.backgroundColor = 'red';
+  // console.log(gameBoard.children)
+  sq.forEach((el, idx) => {
+    if (el === 1){
+      gameBoard[idx].textContent = 'X'
+      // gameBoard[idx].style.backgroundColor = 'red';
       message.textContent = `It's O's turn...`
     }
-    else if (sq === -1) {
-      sq[idx].innerHTML = 'O'
-      sq[idx].style.backgrounColor = 'blue';
+    else if (el === -1) {
+      gameBoard[idx].textContent = 'O'
+      // gameBoard[idx].style.backgrounColor = 'blue';
       message.textContent = `It's X's turn...`
     }
-    else if (sq === null){
-      sq[idx].innerHTML = ''
+    else if (el === null){
+      // gameBoard[idx].innerHTML = ''
     }
-  }) 
+  })
+
+render()
+
+  
 }
+
 
 
 function getWinner(){
@@ -117,6 +136,7 @@ function getWinner(){
     }else (tie)=> `Tie Game. Play again!`
     }
   }
+
 
 
   

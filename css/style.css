@@ -26,3 +26,8 @@ div {
   text-align: center;
   vertical-align: middle;
 }
+
+h1 {
+  font-style: bold;
+  accent-color: auto, black;
+}
