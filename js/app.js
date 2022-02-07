@@ -75,6 +75,7 @@ function init(){
   gameBoard.forEach(sq => sq.innerText ='')
   resetBtn.setAttribute("hidden", true)
   handleClick(sq)
+  turnCount = 0
   getWinner()
   // render()     //3.2.4 
 }
@@ -97,6 +98,7 @@ function handleClick(sq){
     resetBtn.setAttribute('click', init)
     render(sq, idx)
   })
+  
 }
 //update array of null values:
 // function handleClick(event) {
@@ -174,27 +176,41 @@ function getWinner(){
       confetti.start(2000)
       resetBtn.removeAttribute("hidden")
     } 
+  })
+    if(turnCount === 9 && winner === null){
+      console.log('check tie')
+      message.textContent = `Tie Game. Play again!`
+    resetBtn.removeAttribute("hidden")
+    }
+}
+
+
+
+
+    // function tie(){
+    //   return tie = null
+    // }
+    // sq[combo].every()
+    // console.log(tie)
     // else if (sq.every()) !== null){
     //   console.log(tie)
     // }
     // else if (sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === null &&
     //     sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === 3 ||
     //     sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === -3) { 
-    //   console.log('check tie')
-    //   message.textContent = `Tie Game. Play again!`
-    // resetBtn.removeAttribute("hidden")
+
     // }
 
     
     // console.log(combo[0]) // this value is an index that can be 
     // //passed into sq 
     // console.log(combo[1])
-    // console.log(combo[2])
-    console.log('CHECK', sq[combo[0]]+sq[combo[1]]+sq[combo[2]])
+    // // console.log(combo[2])
+    // console.log('CHECK', sq[combo[0]]+sq[combo[1]]+sq[combo[2]])
 
     ///** */   possible tie equals turnCount === 9
     // console.log('SQ', sq)
-})}
+
   // gameBoard.reduce()
   //** */ let winner = (3 || -3)
   // for(let c = 0; c < gameBoard(); c++){
@@ -231,3 +247,6 @@ function getWinner(){
 // I should be made to feel like a winner (confetti)
 // should be told game ends in tie if tie
 // reset button at end regardless, given chance to play again
+
+
+//  bootsrap:  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
