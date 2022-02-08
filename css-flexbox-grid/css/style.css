@@ -1,0 +1,66 @@
+html {
+  box-sizing: border-box
+}
+
+/* The Universal Selector */
+*, /* All elements*/
+*::before, /* All ::before pseudo-elements */
+*::after { /* All ::after pseudo-elements */
+  /* height & width will now include border & padding by default
+     but can be over-ridden as needed */
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #9BB0A5;
+  display: grid;
+  font-family: sans-serif;
+	font-size: 24px;
+	margin: 0;
+  min-height: 80vh;
+}
+
+nav {
+  display: flex;
+  /* flex-direction: row; */
+  height: 60px;
+  background-color: #2F4858;
+
+  /* justify-content: center; */
+  /* justify-content: space-evenly; */
+  align-items: center;
+}
+
+nav > div {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 10px;
+
+}
+
+nav > div:last-of-type {
+  margin-left: auto;
+}
+
+nav > img {
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+aside {
+  background-color: #38b18a;
+}
+
+main {
+  background-color: #92d97c;
+}
+
+footer {
+  background-color: #f9f871;
+}
+
+.flex-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

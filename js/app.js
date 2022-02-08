@@ -250,3 +250,50 @@ function getWinner(){
 
 
 //  bootsrap:  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+
+//**  notes  */
+
+// //// Cleaned up event listener
+// board.addEventListener('click', handleClick)
+
+// // Cleaned up handleClick
+// function handleClick(event){
+// 	const idx = event.target.id.replace('sq', '')
+// 	if (winner !== null){
+// 		return
+// 	}
+// 	if (sq[idx] !== null){
+// 		return 
+// 	}
+	
+// 	sq[idx]= turn
+// 	turn *= -1
+// 	turnCount += 1
+
+// 	resetBtn.setAttribute('click', init)
+// 	render(sq, idx)
+// }
+
+// function getWinner(){
+// 	winCombo.forEach((combo)=>{
+// 	if (sq[combo[0]] + sq[combo[1]] + sq[combo[2]] === 3) {
+// 		// we need to update the winner variable for the if (winner !== null)condition in handleClick to work
+// 		winner = 'X'
+// 		message.textContent = `O is the winner!`
+// 		confetti.start(2000)
+// 		resetBtn.removeAttribute("hidden")
+// 	} else if(sq[combo[0]] + sq[combo[1]] + sq[combo[2]] === -3){
+// 		// we need to update the winner variable for the if (winner !== null)condition in handleClick to work
+// 		winner = 'O'
+// 		message.textContent = `X is the winner!`
+// 		confetti.start(2000)
+// 		resetBtn.removeAttribute("hidden")
+// 	} 
+// 	})
+// 	if(turnCount === 9 && winner === null){
+// 		console.log('check tie')
+// 		message.textContent = `Tie Game. Play again!`
+// 		resetBtn.removeAttribute("hidden")
+// 	}
+// }
