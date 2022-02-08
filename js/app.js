@@ -12,6 +12,8 @@ let turn
 let winner = null
 let gameOver, sq, turnCount, tie, square
 
+
+
 /*------------------------ Cached Element References ------------------------*/  
 
 
@@ -57,20 +59,24 @@ function init(){
 }
 
 
-function handleClick(sq){
-  const idx = event.target.id.replace('sq', '')
-    if (winner !== null){
-      return
-    }
-    if (sq[idx] !== null){
-      return 
-    }
-  sq[idx]= turn
-  turn *= -1
-  turnCount += 1
+function handleClick(event){
+  board.addEventListener('click', function(event){
+    console.log(event.target.id.replace('sq', ''))
+      const idx = event.target.id.replace('sq', '')
+      if (winner !== null){
+        return
+      }
+      if (sq[idx] !== null){
+        return 
+      }
+      sq[idx]= turn
+      turn *= -1
+      turnCount += 1
 
-  resetBtn.setAttribute('click', init)
-  render(sq, idx)
+    resetBtn.setAttribute('click', init)
+    render(sq, idx)
+  })
+  
 }
 
 
@@ -89,16 +95,17 @@ function render(sq, idx) {
 
 
 function getWinner(){
+
   winCombo.forEach((combo)=>{
     if (sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === 3) {
-        console.log(`X wins!`)
-        winner = 'X'
+        console.log(`O wins!`)
+        winner = 'O'
         message.textContent = `O is the winner!`
         confetti.start(2000)
         resetBtn.removeAttribute("hidden")
     }else if(sq[combo[0]]+sq[combo[1]]+sq[combo[2]] === -3){
-        console.log(`O wins!`)
-        winner = 'O'
+        console.log(`X wins!`)
+        winner = 'X'
         message.textContent = `X is the winner!`
       confetti.start(2000)
       resetBtn.removeAttribute("hidden")
